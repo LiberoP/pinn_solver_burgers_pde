@@ -1,8 +1,8 @@
 # Physics Informed Neural Networks: a simple example on Burgers Partial Differential Equation
 
-A small physics-informed neural network (PINN) that solves the one-dimensional viscous Burgers equation, i.e. a partial differential equation (PDE) that arises a particular case of Navier-Stokes equations which govern the motions of fluids. In the low viscosity regimen, Burgers' PDE solution is classically hard to approximate well because of areas in the domain that present steep gradients.
+A small physics-informed neural network (PINN) that solves the one-dimensional viscous Burgers equation, i.e. a partial differential equation (PDE) that arises as a particular case of Navier-Stokes equations which govern the motions of fluids. In the low viscosity regime, Burgers' PDE solution is classically hard to approximate well because of areas in the domain that present steep gradients.
 
-This notebook was the final part of my compilative Bachelor's thesis in Physics at University of Bologna. The thesis itself focuses on explaining how neural networks work in general, then how PINNs work in particular, and finally this small example that applies the method to the Burgers equation. This is meant simply as a demonstration of the approach.
+This notebook was the final part of my literature-based Bachelor's thesis in Physics at University of Bologna. The thesis itself focuses on explaining how neural networks work in general, then how PINNs work in particular, and finally this small example that applies the method to the Burgers equation. This is meant simply as a demonstration of the approach.
 
 The implementation follows closely the tutorial at
 https://github.com/janblechschmidt/PDEsByNNs/blob/main/PINN_Solver.ipynb
@@ -40,7 +40,7 @@ $$
 r(t, x) = u_t + u u_x - \nu u_{xx}
 $$
 
-In a nutshell, we make the neural network itself into an approximation of the solution of the differential equation; we do so by incorporating the PDE in the loss through the residuals. Therefore, training happens on randomly selected points in the spatiotemproal domain.
+In a nutshell, we make the neural network itself into an approximation of the solution of the differential equation; we do so by incorporating the PDE in the loss through the residuals. Therefore, training happens on randomly selected points (fixed at the beginning) in the spatiotemporal domain.
 
 The loss is the unweighted sum of three mean squared terms:
 
@@ -53,6 +53,8 @@ where:
 - the residual term is evaluated at $N_r = 10000$ collocation points sampled uniformly in the domain,
 - the initial condition term uses $N_0 = 5000$ points at $t = 0$,
 - the boundary condition term uses $N_b = 50$ points on $x = -1$ or $x = +1$.
+
+Subscripts $b$ and $0$ denote boundary and initial conditions, respectively; subscript $\theta$ denotes the function approximated by the neural network.
 
 The derivatives $u_t$, $u_x$, $u_{xx}$ are computed with `tf.GradientTape`.
 
@@ -70,26 +72,24 @@ Sampled training points, colour coded by the initial value `u_0 = -sin(pi x)`:
 
 ![Training points](plots/training_points_position.png)
 
-Sampled testing points:
+Sampled testing points (superimposed to the training ones):
 
 ![Testing points](plots/test_points_position.png)
 
-Predicted solution `u_theta(t, x)` on a `600 x 600` grid:
+Predicted solution $u_{\theta}(t, x)$ on a `600 x 600` grid:
 
 ![Predicted solution](plots/burgers_solution.png)
 
 Total training time was about `15 min` on an Intel Core i5-5300 processor at 2.30 GHz with 8.00 GB RAM (no dedicated GPU).
 
-An additional sanity check is computed at the end: the mean absolute residual `mean(|r|)` over `N_test = 50000` freshly sampled points in the domain.
-
-Mean absolute residual over 50 000 points: $\overline{|r|} = 3.23 \times 10^{-4}$.
+An additional sanity check is computed at the end: the mean absolute residual `mean(|r|)` over `N_test = 50000` freshly sampled points in the domain, yielding the result: $\overline{|r|} = 3.23 \times 10^{-4}$.
 
 ## Files
 
 ```
 pinn_solver_burgers_pde/
     burgers_pinn_solver.ipynb        ---> the notebook, everything is in here
-    bs_thesis_full_italian.pdf       ---> the full thesis this notebook realised for (IN ITALIAN)
+    bs_thesis_full_italian.pdf       ---> the full thesis this notebook was realised for (IN ITALIAN)
     plots/
         epochs.png
         training_points_position.png
