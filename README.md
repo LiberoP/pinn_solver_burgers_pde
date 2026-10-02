@@ -13,7 +13,7 @@ https://github.com/janblechschmidt/PDEsByNNs/blob/main/PINN_Solver.ipynb
 We solve the 1D viscous Burgers equation
 
 $$
-u_t + u\,u_x = \nu\, u_{xx}
+u_t + u u_x = \nu u_{xx}
 $$
 
 on the domain $t \in [0, 1]$, $x \in [-1, 1]$, with viscosity $\nu = 0.01 / \pi$.
@@ -37,7 +37,7 @@ A feedforward network $u_\theta(t, x)$ approximates the solution. It has 8 hidde
 The PDE residual is
 
 $$
-r(t, x) = u_t + u\,u_x - \nu\, u_{xx}
+r(t, x) = u_t + u u_x - \nu u_{xx}
 $$
 
 In a nutshell, we make the neural network itself into an approximation of the solution of the differential equation; we do so by incorporating the PDE in the loss through the residuals. Therefore, training happens on randomly selected points in the spatiotemproal domain.
