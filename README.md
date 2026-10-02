@@ -68,7 +68,7 @@ Training loss and testing loss against the number of epochs (semilog y axis):
 
 ![Training and testing loss](plots/epochs.png)
 
-Sampled training points, colour coded by the initial value `u_0 = -sin(pi x)`:
+Sampled training points, colour coded by the initial value $u_{\theta} = -sin(\pi x)$:
 
 ![Training points](plots/training_points_position.png)
 
