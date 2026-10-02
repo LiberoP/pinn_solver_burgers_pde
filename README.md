@@ -45,9 +45,7 @@ In a nutshell, we make the neural network itself into an approximation of the so
 The loss is the unweighted sum of three mean squared terms:
 
 $$
-L = \operatorname{mean}\!\left(r^2\right)
-  + \operatorname{mean}\!\left((u_\theta - u_0)^2\right)
-  + \operatorname{mean}\!\left((u_\theta - u_b)^2\right)
+L = \mathrm{mean}\left(r^2\right) + \mathrm{mean}\left((u_\theta - u_0)^2\right) + \mathrm{mean}\left((u_\theta - u_b)^2\right)
 $$
 
 where:
